@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "9559:9559"
+    volumes:
+      - "./backend/:/app/backend/"
+      - "./alembic/versions/:/app/alembic/versions/"
+    env_file:
+      - envs/dev.env
+    links:
+      - "postgresDB:db"
+    environment:
+      DB_HOST: postgresDB
+      DB_PORT: 5432
+
+    depends_on:
+      - postgresDB
+
+  postgresDB:
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - envs/dev.env
+
+  # frontend:
+  #   build:
+  #     context: .
+  #     dockerfile: frontend/Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./frontend/:/app/frontend/
+
+volumes:
+  postgres_data:
+  data01:
+    driver: local
