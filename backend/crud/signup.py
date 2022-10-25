@@ -88,3 +88,19 @@ def is_token_disabled(token: str) -> ProcessResponse:
                 code=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+@staticmethod
+def disable_user_token(session: Session, token: str) -> ProcessResponse:
+        try:
+            entry = UsersBlacklistedTokens(token=token)
+            session.add(entry)
+            session.commit()
+            session.close()
+            return ProcessResponse(is_success=True)
+        except Exception as e:
+            # logger.error(e)
+            # logger.error(traceback.format_exc())
+            return ProcessResponse(
+                is_success=False, reason=str(e),
+                code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
