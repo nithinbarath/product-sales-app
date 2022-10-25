@@ -4,7 +4,6 @@ from starlette.middleware import Middleware
 from fastapi.middleware.cors import CORSMiddleware
 
 from .users import api_router as users_api_router
-from .todolist import api_router
 
 from config.app_config import app
 
@@ -30,5 +29,5 @@ middleware = [
 
 # app = FastAPI(title="backend",middleware=middleware)
 
-app.include_router(api_router,prefix='/api',tags=["todolist"])
+
 app.include_router(users_api_router,prefix='/api',tags=["users"])
