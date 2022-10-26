@@ -5,7 +5,7 @@ from fastapi_jwt_auth import AuthJWT
 
 from application import get_db_session
 
-from schemas.signup import Signup
+from backend.schemas.authentication.signup import Signup
 from crud.signup import create_new_user, login_auth
 from schemas.common.process_response import SimpleResponse, ProcessResponse
 from schemas.common.utils import make_response
@@ -13,12 +13,12 @@ from schemas.common.utils import make_response
 from passlib.hash import pbkdf2_sha256
 
 
-from schemas.signup import RefreshTokenSchema
+from backend.schemas.authentication.signup import RefreshTokenSchema
 from crud.signup import disable_user_token
 
 from security.securityutils import encrypt_metadata
 
-from models.signup import Signup as SignupModels
+from backend.models.authentication.signup import Signup as SignupModels
 
 router = APIRouter()
 

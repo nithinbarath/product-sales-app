@@ -6,10 +6,10 @@ from sqlalchemy.orm import Session
 from passlib.hash import pbkdf2_sha256
 
 
-from schemas.signup import Signup as SignupSchema, Login as LoginSchema
+from backend.schemas.authentication.signup import Signup as SignupSchema, Login as LoginSchema
 from schemas.common.process_response import ProcessResponse
 
-from models.signup import Signup as SignupModels, UsersBlacklistedTokens
+from backend.models.authentication.signup import Signup as SignupModels, UsersBlacklistedTokens
 
 from security.securityutils import encrypt_metadata,decrypt_metadata
 

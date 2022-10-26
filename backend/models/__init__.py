@@ -1,1 +1,1 @@
-from .signup import Signup, UsersBlacklistedTokens
+from .authentication.signup import Signup, UsersBlacklistedTokens

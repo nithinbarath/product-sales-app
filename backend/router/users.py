@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from endpoint import  signup
+from backend.endpoint.authentication import  signup
 
 
 api_router = APIRouter()
