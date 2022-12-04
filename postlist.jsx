@@ -4,7 +4,7 @@ import { useNavigate} from "react-router-dom";
 
 
 
-const Postlist = ({notesUpdate,setNotesUpdate}) => {
+const Postlist = ({notesUpdate,setNotesUpdate, baseUrls}) => {
     const [data, setDAta] = useState({
         notes:"",
         posts:[],
@@ -12,7 +12,7 @@ const Postlist = ({notesUpdate,setNotesUpdate}) => {
     })
 
     const autoUpdate = () => {
-        axios.get('http://localhost:9559/api/list/todolist')
+        axios.get(`${baseUrls}/list/todolist`)
         .then(response => {
             console.log(response)
             setDAta({posts:response.data})
@@ -31,7 +31,7 @@ const Postlist = ({notesUpdate,setNotesUpdate}) => {
     }
     const submitHandler = e => {
         e.preventDefault()
-        axios.post('http://localhost:9559/api/create/todolist',{notes: data.notes})
+        axios.post(`${baseUrls}/create/todolist`,{notes: data.notes})
         .then(response => {
             data.notes ="";
             console.log(response)
@@ -62,7 +62,7 @@ const Postlist = ({notesUpdate,setNotesUpdate}) => {
     const deleteHandle = (ids) => {
         console.log(ids)
       
-        axios.delete("http://localhost:9559/api/delete/todolist", {
+        axios.delete(`${baseUrls}/delete/todolist`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',

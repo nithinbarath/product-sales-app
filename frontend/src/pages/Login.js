@@ -2,8 +2,20 @@ import axios from "axios";
 import React,{useState} from "react";
 import { useNavigate,Link } from "react-router-dom";
 
-const Login = () => {
+
+
+
+const Login = ({baseUrls}) => {
     const navigate = useNavigate()
+
+    const api = axios.create({
+        withCredentials: true,
+        crossDomain: true,
+        baseURL: baseUrls,
+        "Access-Control-Allow-Origin": "*",
+        sameSite: null,
+        secure: false
+    });
 
     const [registerData,setRegisterData] = useState({
         email:"",
@@ -19,7 +31,7 @@ const Login = () => {
 
     const submitHandler = e => {
         e.preventDefault()
-
+        console.log(process.env.REACT_APP_HOST)
         let bodyFormData = new FormData();
         bodyFormData.append('username', registerData.email);
         bodyFormData.append('password', registerData.password);
@@ -30,14 +42,13 @@ const Login = () => {
             }
         }
 
-        axios.post("http://localhost:9559/api/login", bodyFormData, config).then(res => {
+        api.post("/login", bodyFormData, config).then(res => {
             if (res.status === 200){
            
-                navigate("/register")
-                axios.get("http://localhost:9559/api/verify")
+                api.get("/verify")
                     .then(res => {
                         if(res.status === 200){
-                            
+                            navigate("/dashboard")
                         }
                     })
                 localStorage.setItem("auth", true);
@@ -47,6 +58,7 @@ const Login = () => {
             }
         }).catch(err => {
             console.log("Incorrect Details. Please try again.", 2000);
+            console.log(err)
 
             if (err.response) {
                 if(err.response.status !== 401 && err.response.status !== 200){
@@ -76,7 +88,7 @@ const Login = () => {
                      value={registerData.password}
                      onChange={changeHandler}
                      placeholder="password"/>
-                    <button type="submit">Login</button>
+                    <button type="submit">Login {process.env.REACT_APP_NOT_SECRET_CODE} 1</button>
                 </form>
                 <p>You don't have an account?<Link to="/register">Register</Link></p>
             </div>

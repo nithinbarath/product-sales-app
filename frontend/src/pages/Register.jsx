@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import Add from "../img/addAvatar.png";
 import { useNavigate,Link } from "react-router-dom";
 
-const Register = () => {
+const Register = ({baseUrls}) => {
     const navigate = useNavigate()
 
     const [registerData,setRegisterData] = useState({
@@ -21,7 +21,7 @@ const Register = () => {
 
     const submitHandler = e => {
         e.preventDefault()
-        axios.post('http://localhost:9559/api/signup',
+        axios.post(`${baseUrls}/signup`,
         {
             username: registerData.username,
             email:registerData.email,
